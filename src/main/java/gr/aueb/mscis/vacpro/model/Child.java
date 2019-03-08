@@ -1,0 +1,200 @@
+package gr.aueb.mscis.vacpro.model;
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
+
+/**
+ * The type Child.
+ *
+ */
+@Entity
+@Table(name = "Child")
+@SequenceGenerator(name = "child_seq", initialValue = 1, allocationSize = 1)
+public class Child implements Serializable {
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "child_seq")
+	private int id;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "surname")
+	private String surname;
+
+	@Column(name = "age")
+	private Date birthday;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
+	private Parent parent;
+
+	/**
+	 * Instantiates a new Child.
+	 */
+	public Child() {
+	}
+
+	/**
+	 * Instantiates a new Child.
+	 *
+	 * @param name     the name
+	 * @param surname  the surname
+	 * @param birthday the age
+	 */
+	public Child(final String name, final String surname, final Date birthday) {
+		this.name = name;
+		this.surname = surname;
+		this.birthday = birthday;
+	}
+
+	/**
+	 * Instantiates a new Child.
+	 *
+	 * @param name     the name
+	 * @param surname  the surname
+	 * @param birthday the age
+	 * @param parent   the parent
+	 */
+	public Child(final String name, final String surname, final Date birthday, final Parent parent) {
+		this.name = name;
+		this.surname = surname;
+		this.birthday = birthday;
+		this.parent = parent;
+	}
+
+	/**
+	 * Gets id.
+	 *
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Sets id.
+	 *
+	 * @param id the id
+	 */
+	public void setId(final int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Gets name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Sets name.
+	 *
+	 * @param name the name
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Gets surname.
+	 *
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * Sets surname.
+	 *
+	 * @param surname the surname
+	 */
+	public void setSurname(final String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * Gets age.
+	 *
+	 * @return the age
+	 */
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	/**
+	 * Sets age.
+	 *
+	 * @param birthday the birthday
+	 */
+	public void setBirthday(final Date birthday) {
+		this.birthday = birthday;
+	}
+
+	/**
+	 * Gets parent.
+	 *
+	 * @return the parent
+	 */
+	public Parent getParent() {
+		return parent;
+	}
+
+	/**
+	 * Sets parent.
+	 *
+	 * @param parent the parent
+	 */
+	public void setParent(final Parent parent) {
+		this.parent = parent;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()){
+			return false;
+		}
+		Child child = (Child) o;
+		return getId() == child.getId()
+				&& Objects.equals(getName(), child.getName())
+				&& Objects.equals(getSurname(), child.getSurname())
+				&& Objects.equals(getParent(), child.getParent());
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(getId(), getName(), getSurname(), getParent());
+	}
+
+	@Override
+	public String toString() {
+		return "{\"Child\":{"
+				+ "\"id\":\"" + id + "\""
+				+ ",\"name\":" + name + "\""
+				+ ",\"surname\":" + surname + "\""
+				+ ",\"birthday\":" + birthday
+				+ ",\"parent\":" + parent
+				+ "}}";
+	}
+}
